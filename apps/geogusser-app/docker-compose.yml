@@ -1,0 +1,22 @@
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      - MAPILLARY_ACCESS_TOKEN=${MAPILLARY_ACCESS_TOKEN:-}
+    networks:
+      - geogusser-net
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - geogusser-net
+
+networks:
+  geogusser-net:
+    driver: bridge

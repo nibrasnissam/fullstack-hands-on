@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GeoGusser</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/mapillary-js@4.1.2/dist/mapillary.css" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== Welcome / Home Screen ===== -->
+  <section id="screen-welcome" class="screen active">
+    <div class="panel">
+      <h1>🌍 GeoGusser</h1>
+      <p class="subtitle">Guess the world, one photo at a time.</p>
+
+      <label class="field-label" for="player-name">Your name</label>
+      <input id="player-name" class="text-input" type="text" placeholder="e.g. Alex" maxlength="24" />
+
+      <div class="welcome-actions">
+        <button id="btn-continue" class="btn-primary">Continue</button>
+        <button id="btn-guest" class="btn-secondary">Play as Guest</button>
+      </div>
+      <p id="welcome-note" class="muted-note"></p>
+    </div>
+  </section>
+
+  <!-- ===== Mode Select Screen ===== -->
+  <section id="screen-start" class="screen">
+    <div class="panel">
+      <div class="panel-header">
+        <h1>Choose a mode</h1>
+        <button id="btn-change-name" class="link-btn">Not <span id="greeting-name">you</span>?</button>
+      </div>
+      <p class="subtitle">Look at the photo, drop your pin, see how close you get.</p>
+
+      <div class="mode-grid">
+        <button class="mode-card selected" data-mode="classic">
+          <strong>Classic</strong>
+          <span>Free look, 5 rounds</span>
+        </button>
+        <button class="mode-card" disabled title="Coming soon">
+          <strong>No Move</strong>
+          <span>Coming soon</span>
+        </button>
+        <button class="mode-card" disabled title="Coming soon">
+          <strong>Timed</strong>
+          <span>Coming soon</span>
+        </button>
+        <button class="mode-card" disabled title="Coming soon">
+          <strong>Country Streak</strong>
+          <span>Coming soon</span>
+        </button>
+      </div>
+
+      <button id="btn-play" class="btn-primary">Play</button>
+      <p id="start-error" class="error"></p>
+    </div>
+  </section>
+
+  <!-- ===== Game Screen ===== -->
+  <section id="screen-game" class="screen">
+    <div class="hud">
+      <div class="hud-item"><span id="hud-player"></span></div>
+      <div class="hud-item">Round <span id="hud-round">1</span>/5</div>
+      <div class="hud-item">Score <span id="hud-score">0</span></div>
+    </div>
+
+    <div class="scene">
+      <div id="scene-viewer" class="scene-viewer"></div>
+      <div id="scene-image" class="scene-image"></div>
+
+      <div id="map-widget" class="map-widget">
+        <div id="map" class="map-small"></div>
+        <button id="btn-expand" class="btn-expand" title="Expand map">⤢</button>
+      </div>
+    </div>
+
+    <div class="action-bar">
+      <span id="pin-hint">Click the map to drop your pin</span>
+      <button id="btn-guess" class="btn-primary" disabled>Guess</button>
+    </div>
+  </section>
+
+  <!-- ===== Round Result Screen ===== -->
+  <section id="screen-result" class="screen">
+    <div class="panel">
+      <h2 id="result-headline">Round result</h2>
+      <div id="map-result" class="map-result"></div>
+      <div class="result-stats">
+        <div><span class="stat-label">Actual location</span><span id="result-location"></span></div>
+        <div><span class="stat-label">Distance</span><span id="result-distance"></span></div>
+        <div><span class="stat-label">Round score</span><span id="result-score"></span></div>
+      </div>
+      <button id="btn-next" class="btn-primary">Next round</button>
+    </div>
+  </section>
+
+  <!-- ===== Final Summary Screen ===== -->
+  <section id="screen-final" class="screen">
+    <div class="panel">
+      <h1>Game over</h1>
+      <p class="final-score"><span id="final-player"></span>Total score: <span id="final-total"></span></p>
+      <table class="summary-table">
+        <thead>
+          <tr><th>Round</th><th>Location</th><th>Distance</th><th>Score</th></tr>
+        </thead>
+        <tbody id="summary-body"></tbody>
+      </table>
+      <button id="btn-play-again" class="btn-primary">Play again</button>
+    </div>
+  </section>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/mapillary-js@4.1.2/dist/mapillary.js"></script>
+  <script>
+    // Point this at wherever the backend API is reachable from the browser.
+    window.API_BASE = window.API_BASE || "http://localhost:8000";
+  </script>
+  <script src="app.js"></script>
+</body>
+</html>
